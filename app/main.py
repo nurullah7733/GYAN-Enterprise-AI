@@ -20,7 +20,10 @@ initialize()
 
 
 BASE=Path(__file__).resolve().parent
-app=FastAPI(title='Atlas Enterprise RAG',docs_url='/api/docs')
+app=FastAPI(
+    title='Atlas Enterprise RAG',
+    docs_url='/api/docs'
+    )
 app.mount('/static',StaticFiles(directory=BASE/'static'),name='static')
 templates=Jinja2Templates(directory=BASE/'templates')
 

@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# vs code auto generated folders/files
+.vscode/
+.commandcode

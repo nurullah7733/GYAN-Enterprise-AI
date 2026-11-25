@@ -26,9 +26,13 @@ def retrieve(s):
     p=s['principal']
     # Include the most recent user question for short follow-ups such as 'summarize that'.
     prior_questions=[m['content'] for m in s.get('history',[]) if m['role']=='user']
+
     query=(prior_questions[-1]+'\nFollow-up: '+s['question']) if prior_questions else s['question']
+
     hits=search(p.tenant,embed(query),p.groups,p.subject)
+
     hits=[h for h in hits if h['score']>=settings().min_relevance]
+    
     sources=[{'index':i+1,'document_id':h['metadata'].get('document_id',''),'title':h['metadata'].get('title',''), 'page':h['metadata'].get('page',1),'excerpt':h['metadata'].get('text','')[:320]} for i,h in enumerate(hits)]
     return {'passages':hits,'sources':sources}
 
@@ -57,9 +61,13 @@ def validate(s): return {'answer':check_output(s['answer'])}
 def make_graph():
     g=StateGraph(State)
     for name,fn in [('guard',guard),('retrieve',retrieve),('no_evidence',no_evidence),('generate',generate),('validate',validate)]:g.add_node(name,fn)
+
     g.add_edge(START,'guard');g.add_edge('guard','retrieve')
+
     g.add_conditional_edges('retrieve',route,{'generate':'generate','no_evidence':'no_evidence'})
+
     g.add_edge('generate','validate');g.add_edge('validate',END);g.add_edge('no_evidence',END)
+    
     return g.compile()
 
 
