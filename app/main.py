@@ -21,7 +21,7 @@ initialize()
 
 BASE=Path(__file__).resolve().parent
 app=FastAPI(
-    title='Atlas Enterprise RAG',
+    title='Gyan Enterprise RAG',
     docs_url='/api/docs'
     )
 app.mount('/static',StaticFiles(directory=BASE/'static'),name='static')

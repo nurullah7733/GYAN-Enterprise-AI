@@ -1,9 +1,9 @@
 // Simple single-workspace UI. No login, tokens, or user accounts.
 const $=id=>document.getElementById(id);
 // Single-workspace conversation identifier, not an authentication token.
-let conversationId=sessionStorage.getItem('atlas_conversation_id')||crypto.randomUUID();
-sessionStorage.setItem('atlas_conversation_id',conversationId);
-$('newChat').onclick=()=>{conversationId=crypto.randomUUID();sessionStorage.setItem('atlas_conversation_id',conversationId);$('messages').replaceChildren();toast('Started a new conversation')};
+let conversationId=sessionStorage.getItem('gyan_conversation_id')||crypto.randomUUID();
+sessionStorage.setItem('gyan_conversation_id',conversationId);
+$('newChat').onclick=()=>{conversationId=crypto.randomUUID();sessionStorage.setItem('gyan_conversation_id',conversationId);$('messages').replaceChildren();toast('Started a new conversation')};
 
 const toast=msg=>{const el=$('toast');el.textContent=msg;el.style.display='block';setTimeout(()=>el.style.display='none',4000)};
 const api=async(path,options={})=>{const res=await fetch(path,{...options,headers:{'Content-Type':'application/json',...(options.headers||{})}});const data=await res.json();if(!res.ok)throw Error(data.detail||'Request failed');return data};
